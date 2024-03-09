@@ -9,7 +9,7 @@ ProfileRouter.get("/users", async (req, res) => {
     res.json(allProfiles);
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: "Internal Server Error" });
+    res.status(500).json({ message: "Error while getting all user profiles" });
   }
 });
 
@@ -17,8 +17,6 @@ ProfileRouter.post("/profile", verifyToken, async (req, res) => {
   try {
     const userId = req.user.userId;
     const { sportsProfile, preferredActivities, location } = req.body;
-
-    console.log("User ID:", userId);
 
     let userProfile = await SportsProfile.findOneAndUpdate(
       { user: userId },
@@ -28,8 +26,10 @@ ProfileRouter.post("/profile", verifyToken, async (req, res) => {
 
     res.json(userProfile);
   } catch (error) {
-    console.error("Profile creation error:", error);
-    res.status(500).json({ message: "Internal Server Error" });
+    console.error(error);
+    res
+      .status(500)
+      .json({ message: "Error while creating/updating the profile" });
   }
 });
 
@@ -41,7 +41,7 @@ ProfileRouter.delete("/profile", verifyToken, async (req, res) => {
     res.json({ message: "User profile deleted successfully" });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: "Internal Server Error" });
+    res.status(500).json({ message: "Error while deleting the profile" });
   }
 });
 

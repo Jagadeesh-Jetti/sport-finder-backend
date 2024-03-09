@@ -15,13 +15,13 @@ app.get("/", (req, res) => {
   res.send("Sport Finder Backend");
 });
 
+app.use("/users", SportsUserRouter);
+app.use("/profile", ProfileRouter);
+
 app.use((err, req, res, next) => {
   console.error(err.stack);
   res.status(500).json({ message: "Something went terribly wrong" });
 });
-
-app.use("/users", SportsUserRouter);
-app.use("/profile", ProfileRouter);
 
 const PORT = process.env.PORT || 3000;
 

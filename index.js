@@ -1,24 +1,15 @@
 const express = require("express");
-const dotenv = require("dotenv");
 const cors = require("cors");
+const app = express();
 
-const dataBase = require("./utils/db");
 const SportsUserRouter = require("./routers/User.router");
 const ProfileRouter = require("./routers/Profile.router");
-
-dotenv.config();
-
-const app = express();
-const PORT = process.env.PORT || 3000;
+const dataBase = require("./db");
 
 dataBase();
 
 app.use(express.json());
-
 app.use(cors());
-
-app.use("/users", SportsUserRouter);
-app.use("/profile", ProfileRouter);
 
 app.get("/", (req, res) => {
   res.send("Sport Finder Backend");
@@ -26,8 +17,13 @@ app.get("/", (req, res) => {
 
 app.use((err, req, res, next) => {
   console.error(err.stack);
-  res.status(500).json({ message: "Internal Server Error" });
+  res.status(500).json({ message: "Something went terribly wrong" });
 });
+
+app.use("/users", SportsUserRouter);
+app.use("/profile", ProfileRouter);
+
+const PORT = process.env.PORT || 3000;
 
 app.listen(PORT, () => {
   console.log("Sport finder backend started");

@@ -19,34 +19,37 @@ const AddressSchema = new mongoose.Schema({
   },
 });
 
-const SportsProfileSchema = new mongoose.Schema({
-  user: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "SportsUser",
-    required: true,
-  },
-  sportsProfile: [
-    {
-      sport: {
-        type: String,
-        required: true,
-      },
-      skillLevel: {
-        type: String,
-        enum: ["Beginner", "Intermediate", "Advanced"],
-        required: true,
-      },
+const SportsProfileSchema = new mongoose.Schema(
+  {
+    user: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "SportsUser",
+      required: true,
     },
-  ],
-  preferredActivities: {
-    type: [String],
-    required: true,
+    sportsProfile: [
+      {
+        sport: {
+          type: String,
+          required: true,
+        },
+        skillLevel: {
+          type: String,
+          enum: ["Beginner", "Intermediate", "Advanced"],
+          required: true,
+        },
+      },
+    ],
+    preferredActivities: {
+      type: [String],
+      required: true,
+    },
+    location: {
+      type: AddressSchema,
+      required: true,
+    },
   },
-  location: {
-    type: AddressSchema,
-    required: true,
-  },
-});
+  { timestamps: true }
+);
 
 // SportsProfileSchema.pre("save", async function (next) {
 //   // Geocode the address and set the coordinates before saving

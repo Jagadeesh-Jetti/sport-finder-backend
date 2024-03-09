@@ -27,8 +27,8 @@ SportsUserRouter.post("/signup", async (req, res) => {
 
     res.status(201).json({ message: "SportsUser created successfully" });
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: "Internal Server Error" });
+    console.error("Error during signup:", error);
+    res.status(500).json({ message: "Error while signing up the user" });
   }
 });
 
@@ -39,7 +39,7 @@ SportsUserRouter.post("/login", async (req, res) => {
     const sportsUser = await SportsUser.findOne({ email });
 
     if (!sportsUser) {
-      return res.status(401).json({ message: "credientials not matched" });
+      return res.status(401).json({ message: "User not found in database" });
     }
 
     const isPasswordValid = await bcrypt.compare(password, sportsUser.password);
@@ -50,7 +50,7 @@ SportsUserRouter.post("/login", async (req, res) => {
 
     const token = jwt.sign(
       { sportsUserId: sportsUser._id },
-      process.env.JWT_SECRET,
+      process.env.JWT_SECRET || "sports",
       {
         expiresIn: "1h",
       }
@@ -59,7 +59,7 @@ SportsUserRouter.post("/login", async (req, res) => {
     res.json({ token });
   } catch (error) {
     console.error("Error during login:", error);
-    res.status(500).json({ message: "Internal Server Error" });
+    res.status(500).json({ message: "Error while logging in the user" });
   }
 });
 

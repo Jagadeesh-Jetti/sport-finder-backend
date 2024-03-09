@@ -9,6 +9,8 @@ const SportsUserSchema = new mongoose.Schema({
   email: {
     type: String,
     required: true,
+    unique: true,
+    match: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
   },
   phoneNumber: {
     type: Number,

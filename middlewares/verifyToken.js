@@ -1,7 +1,6 @@
 const jwt = require("jsonwebtoken");
 
 function verifyToken(req, res, next) {
-  // Skip token verification for the default route
   if (req.path === "/") {
     return next();
   }

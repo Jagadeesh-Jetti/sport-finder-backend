@@ -1,6 +1,6 @@
 const express = require("express");
 const ProfileRouter = express.Router();
-const verifyToken = require("../middlewares/verifyToken");
+// const verifyToken = require("../middlewares/verifyToken");
 const SportsProfile = require("../models/Profile.model");
 
 ProfileRouter.get("/users", async (req, res) => {
@@ -13,7 +13,7 @@ ProfileRouter.get("/users", async (req, res) => {
   }
 });
 
-ProfileRouter.post("/profile", verifyToken, async (req, res) => {
+ProfileRouter.post("/profile", async (req, res) => {
   try {
     const userId = req.user.userId;
     const { sportsProfile, preferredActivities, location } = req.body;
@@ -33,7 +33,7 @@ ProfileRouter.post("/profile", verifyToken, async (req, res) => {
   }
 });
 
-ProfileRouter.delete("/profile", verifyToken, async (req, res) => {
+ProfileRouter.delete("/profile", async (req, res) => {
   try {
     const userId = req.user.userId;
     await SportsProfile.findOneAndDelete({ user: userId });

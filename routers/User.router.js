@@ -48,15 +48,15 @@ SportsUserRouter.post("/login", async (req, res) => {
       return res.status(401).json({ message: "Invalid email or password" });
     }
 
-    const token = jwt.sign(
-      { sportsUserId: sportsUser._id },
-      process.env.JWT_SECRET || "sports",
-      {
-        expiresIn: "1h",
-      }
-    );
+    // const token = jwt.sign(
+    //   { sportsUserId: sportsUser._id },
+    //   process.env.JWT_SECRET || "sports",
+    //   {
+    //     expiresIn: "1h",
+    //   }
+    // );
 
-    res.json({ token });
+    // res.json({ token });
   } catch (error) {
     console.error("Error during login:", error);
     res.status(500).json({ message: "Error while logging in the user" });

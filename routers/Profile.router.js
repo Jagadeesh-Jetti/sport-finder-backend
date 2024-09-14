@@ -1,6 +1,6 @@
 const express = require("express");
 const ProfileRouter = express.Router();
-// const verifyToken = require("../middlewares/verifyToken");
+
 const SportsProfile = require("../models/Profile.model");
 
 ProfileRouter.get("/users", async (req, res) => {
